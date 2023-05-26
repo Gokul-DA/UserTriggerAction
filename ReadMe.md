@@ -10,20 +10,20 @@ This application lets the used to define a trigger and action. Trigger is a cond
 
 #### Below are the Screenshots for example:
 *Setting up trigger and Action*
-![img.png](images/img.png)
+![img.png](src/main/resources/images/img.png)
 
 *Setting up trigger with invalid details*
 ![img.png](img.png)
 
 *Setting up action with invalid details*
-![img_1.png](images/img_1.png)
+![img_1.png](src/main/resources/images/img_1.png)
 
 *If the user tris to save the input before setting up trigger*
-![img_2.png](images/img_2.png)
+![img_2.png](src/main/resources/images/img_2.png)
 
 > Once the Trigger and action are defined, we can move to setting up user input for variables.
 
 *The response here has **userAge** and **dailyRunningKms** as same because of the action that performed since the trigger condition has been met.*
-![img_3.png](images/img_3.png)
+![img_3.png](src/main/resources/images/img_3.png)
 
 
