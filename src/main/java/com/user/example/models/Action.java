@@ -20,7 +20,7 @@ public class Action {
     public Action(String action) throws NoSuchFieldException {
 
         if (action != null) {
-            String[] split = action.split(" ");
+            String[] split = action.split(SPACE);
             int length = split.length - 1;
             if (length == ACTION_MINIMUM_SPLIT) {
                 String source = split[ACTION_SOURCE_INDEX];

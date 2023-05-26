@@ -17,7 +17,7 @@ public class ControllerClass {
     @Autowired
     TriggerActionService triggerActionService;
 
-    @PostMapping(path = {"/triggerAction"},consumes = {"application/json"})
+    @PostMapping(path = {"/triggerAction"},consumes = {"application/json"},produces = {"application/json"})
     ResponseEntity<Object> setTriggerAndAction(@RequestBody TriggerActionRequest triggerActionRequest){
         System.out.println("triggerActionRequest = " + triggerActionRequest);
         try {
@@ -28,24 +28,26 @@ public class ControllerClass {
         }catch (NoSuchFieldException e){
             return ResponseEntity.badRequest().body("No Such field ["+e.getMessage()+"]. Please define a proper action/trigger");
         } catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
         return ResponseEntity.accepted().body(null);
     }
 
-    @PostMapping(path = {"/userInput"},consumes = {"application/json"})
+    @PostMapping(path = {"/userInput"},consumes = {"application/json"},produces = {"application/json"})
     ResponseEntity<Object> setInput(@RequestBody UserInput userInput){
-        System.out.println("userInput = " + userInput);
+        System.out.println("Request userInput = " + userInput);
         try {
             triggerActionService.isInitialised();
             userInput.validateRequest();
             triggerActionService.checkTrigger(userInput);
+            System.out.println("After updating userInput = " + userInput);
         } catch (NullPointerException | InvalidInputException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
-
-        return ResponseEntity.accepted().body(null);
+        return ResponseEntity.accepted().body(userInput);
     }
 }

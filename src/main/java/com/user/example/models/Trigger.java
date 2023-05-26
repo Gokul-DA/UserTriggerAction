@@ -7,8 +7,7 @@ import lombok.ToString;
 
 import java.lang.reflect.Field;
 
-import static com.user.example.AppConstants.TRIGGER_MINIMUM_SPLIT;
-import static com.user.example.AppConstants.TRIGGER_SOURCE_INDEX;
+import static com.user.example.AppConstants.*;
 
 @Getter
 @ToString
@@ -20,7 +19,7 @@ public class Trigger {
 
     public Trigger(String trigger) throws NoSuchFieldException {
         if (trigger != null) {
-            String[] split = trigger.split(" ");
+            String[] split = trigger.split(SPACE);
             int length = split.length - 1;
             if (length >= TRIGGER_MINIMUM_SPLIT) {
                 String source = split[TRIGGER_SOURCE_INDEX];
@@ -41,6 +40,5 @@ public class Trigger {
         } else
             throw new NullPointerException("trigger cannot be null");
     }
-
 
 }

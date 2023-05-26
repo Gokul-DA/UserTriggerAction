@@ -18,7 +18,7 @@ public enum Logic {
         for (Logic entry : Logic.values())
             if (entry.getLogic().equals(val))
                 return entry;
-        throw new IllegalArgumentException("Unexpected value '" + val + "' for 'Logic' enum.");
+        throw new IllegalArgumentException("Unexpected value '" + val + "' for trigger");
     }
 
     public String getLogic() {

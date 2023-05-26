@@ -5,6 +5,7 @@ import com.user.example.models.Logic;
 import com.user.example.models.Trigger;
 import com.user.example.models.requests.UserInput;
 import lombok.Getter;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -59,13 +60,21 @@ public class TriggerActionService {
         }
 
         if(performAction)
-            performAction();
+            performAction(userInput);
         else
             System.out.println("Trigger condition not satisfied");
     }
 
-    public void performAction() {
+    public void performAction(UserInput userInput) throws IllegalAccessException {
         System.out.println("TriggerActionService.performAction");
+        System.out.println("Before updating "+userInput);
+
+
+//        Object a = sourceField.get(userInput);
+//        targetField.set(userInput,a);
+        copyTo(userInput);
+
+        System.out.println("After updating "+userInput);
     }
 
     public void isInitialised() {
@@ -73,6 +82,29 @@ public class TriggerActionService {
             throw new NullPointerException("Trigger is not defined. Please define trigger first");
         if (this.action == null)
             throw new NullPointerException("Action is not defined. Please define action first");
+    }
+
+    public void copyTo(UserInput userInput) throws IllegalAccessException {
+        Field sourceField = this.action.getSourceField();
+        Field targetField = this.action.getTargetField();
+        sourceField.setAccessible(true);
+        targetField.setAccessible(true);
+
+        if (sourceField.getType() == String.class)
+            throw new IllegalArgumentException("Cant copy String to Integer/Double");
+        if (targetField.getType() == String.class)
+            throw new IllegalArgumentException("Cant copy Integer/Double to String");
+
+        Object value = new Object();
+        if (sourceField.getType() == int.class && targetField.getType() == double.class)
+            value = sourceField.getDouble(userInput);
+
+        if (sourceField.getType() == double.class && targetField.getType() == int.class)
+            value = (int) sourceField.getDouble(userInput);
+        if (sourceField.getType() == double.class && targetField.getType() == double.class)
+            value = sourceField.getDouble(userInput);
+
+        targetField.set(userInput, value);
     }
 
 }
