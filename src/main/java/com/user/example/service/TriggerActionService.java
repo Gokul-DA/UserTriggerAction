@@ -5,7 +5,6 @@ import com.user.example.models.Logic;
 import com.user.example.models.Trigger;
 import com.user.example.models.requests.UserInput;
 import lombok.Getter;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -69,9 +68,6 @@ public class TriggerActionService {
         System.out.println("TriggerActionService.performAction");
         System.out.println("Before updating "+userInput);
 
-
-//        Object a = sourceField.get(userInput);
-//        targetField.set(userInput,a);
         copyTo(userInput);
 
         System.out.println("After updating "+userInput);
